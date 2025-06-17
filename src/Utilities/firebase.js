@@ -2,13 +2,11 @@ import { initializeApp } from "firebase/app";
 import { getMessaging } from "firebase/messaging";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDF9X5qxDdurOvAtqa0_rWZrcYQ9WXhnSA",
-  authDomain: "sochrpayroll.firebaseapp.com",
-  projectId: "sochrpayroll",
-  storageBucket: "sochrpayroll.firebasestorage.app",
-  messagingSenderId: "876743523671",
-  appId: "1:876743523671:web:0f7ae19ab09e0170cc5212",
-  measurementId: "G-8VETVDGMNX",
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID",
 };
 
 const app = initializeApp(firebaseConfig);
