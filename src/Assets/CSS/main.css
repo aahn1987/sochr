@@ -4,3 +4,36 @@ body{
     font-size: 14px;
     font-family: 'Roboto';
 }
+.loginContainer{
+    background-image: url('../IMG/background.jpg');
+    background-size: cover;
+    height: 100vh;
+}
+.logintent{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(20,20,48,0.9);
+}
+.alllink{
+    text-decoration: none;
+}
+.alllink:hover {
+    text-decoration: none;
+}
+.LoginImage{
+    width: 30%;
+}
+.textcolorwhite {
+    color: #ffffff;
+}
+.resetlink{
+    text-decoration: none;
+    color: #32337b;
+}
+.resetlink:hover{
+    text-decoration: none;
+}
+.OrgLogos {
+    width: 100%;
+    border-radius: 1rem;
+}

@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Box } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   AdminContainer,
   CompanyContainer,
@@ -13,6 +14,16 @@ import {
   MobilePortalHomeContainer,
 } from "./Components/Mobile/Containers";
 import { UserLoginStore } from "./Store";
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#32337b",
+    },
+    secondary: {
+      main: "#f37021",
+    },
+  },
+});
 export default function App() {
   const isLoggedIn = UserLoginStore((state) => state.isLoggedIn);
   const userRole = UserLoginStore((state) => state.userRole);
@@ -20,7 +31,7 @@ export default function App() {
     return <Navigate to={"/" + userRole} />;
   };
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Box
         sx={{
           display: {
@@ -35,9 +46,9 @@ export default function App() {
         <Routes>
           <Route
             index
+            path="/*"
             element={!isLoggedIn ? <PortalHomeContainer /> : <NavLinkToGo />}
           />
-          <Route path="/*" element={<PortalHomeContainer />} />
           <Route path="/admin/*" element={<AdminContainer />} />
           <Route path="/organization/*" element={<CompanyContainer />} />
           <Route path="/employee/*" element={<EmployeeContainer />} />
@@ -67,6 +78,6 @@ export default function App() {
           <Route path="/employee/*" element={<MobileEmployeeContainer />} />
         </Routes>
       </Box>
-    </>
+    </ThemeProvider>
   );
 }

@@ -5,9 +5,9 @@ const UserLoginStore = create((set) => ({
   userRef: Cookies.get("userRef"),
   empSOC: Cookies.get("empSOC"),
   isLoggedIn: Cookies.get("loggedIn"),
-  setuserRole: (role) => set((state) => ({ userRole: role })),
-  setuserRef: (ref) => set((state) => ({ userRef: ref })),
-  setempSOC: (soc) => set((state) => ({ empSOC: soc })),
-  setisLoggedIn: (loggedIn) => set((state) => ({ isLoggedIn: loggedIn })),
+  setuserRole: (data) => set((state) => ({ userRole: data })),
+  setuserRef: (data) => set((state) => ({ userRef: data })),
+  setempSOC: (data) => set((state) => ({ empSOC: data })),
+  setisLoggedIn: (data) => set((state) => ({ isLoggedIn: data })),
 }));
 export default UserLoginStore;
