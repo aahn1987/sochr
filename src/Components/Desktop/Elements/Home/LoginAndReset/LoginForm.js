@@ -8,6 +8,8 @@ import { useState } from "react";
 import md5 from "md5";
 import { ActionMessageStore, UserLoginStore } from "../../../../../Store";
 import Cookies from "js-cookie";
+import { LoginAPI, GetSOCAPI } from "../../../../../Context/ApiLinks";
+import { sendFcmTokenToLaravel } from "../../../../../Context/SysFuncs";
 export default function LoginForm() {
   const setsanckShow = ActionMessageStore((state) => state.setsanckShow);
   const setsnackMessage = ActionMessageStore((state) => state.setsnackMessage);
@@ -38,10 +40,7 @@ export default function LoginForm() {
       userpass: md5(formData.userpass).toString(),
     };
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/account/login",
-        encryptedData
-      );
+      const response = await axios.post(LoginAPI, encryptedData);
       const result = [response.data];
       result.forEach((item) => {
         setsnackMessage(item.message);
@@ -55,6 +54,20 @@ export default function LoginForm() {
             expires: 30,
             path: "/",
           });
+          if (item.userrole == "employee") {
+            const socREF = axios.post(GetSOCAPI, {
+              employee_reference: item.user_reference,
+            });
+            const socrefres = [socREF.data];
+            socrefres.forEach((soc) => {
+              Cookies.set("empSOC", soc.soc_reference, {
+                expires: 30,
+                path: "/",
+              });
+              setempSOC(soc.soc_reference);
+              sendFcmTokenToLaravel(soc.soc_reference);
+            });
+          }
           setuserRole(item.userrole);
           setuserRef(item.user_reference);
           setisLoggedIn(true);
