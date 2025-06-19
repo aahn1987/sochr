@@ -1,3 +1,4 @@
 import UserLoginStore from "./UserLoginStore";
 import ActionMessageStore from "./ActionMessageStore";
-export { ActionMessageStore, UserLoginStore };
+import AdminInfoStore from "./AdminInfoStore";
+export { ActionMessageStore, UserLoginStore, AdminInfoStore };

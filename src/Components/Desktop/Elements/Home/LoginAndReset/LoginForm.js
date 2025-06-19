@@ -113,7 +113,7 @@ export default function LoginForm() {
     <Paper elevation={3} sx={{ width: "25%", p: 3, borderRadius: "10%" }}>
       <Box textAlign="center">
         <Img className="LoginImage" src={LOGO} loader={<CircleLoader />} />
-        <Typography color="primary" variant="h6" sx={{ mt: 2, mb: 3 }}>
+        <Typography color="secondary" variant="h6" sx={{ mt: 2, mb: 3 }}>
           Login to your account
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -122,6 +122,7 @@ export default function LoginForm() {
             value={formData.username}
             onChange={handleChange}
             required
+            color="secondary"
             fullWidth
             id="username"
             size="small"
@@ -133,6 +134,7 @@ export default function LoginForm() {
           <TextField
             margin="normal"
             fullWidth
+            color="secondary"
             size="small"
             name="userpass"
             value={formData.userpass}
@@ -147,6 +149,7 @@ export default function LoginForm() {
             type="submit"
             fullWidth
             variant="contained"
+            color="secondary"
             sx={{ mt: 3, mb: 2 }}
             disabled={loading}
           >
