@@ -65,7 +65,7 @@ export default function EditStaff() {
           fullname: res.data.fullname,
           jobpostition: res.data.jobpostition,
           emailaddress: res.data.emailaddress,
-          fullname: res.data.fullname,
+          jobpostition: res.data.jobpostition,
           phonenumber: res.data.phonenumber,
           managestaff: res.data.manage_staff,
           manageiom: res.data.manage_iom,

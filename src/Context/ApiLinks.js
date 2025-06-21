@@ -14,3 +14,11 @@ export const AdminEditAPI = APIURL + "admin/update";
 export const AdminDeleteAPI = APIURL + "admin/delete";
 export const AdminAccountAPI = APIURL + "admin/logininfo";
 export const AdminAddAPI = APIURL + "admin/new";
+
+// IOM HR
+export const IOMHRListerAPI = APIURL + "hr/list";
+export const IOMHRAddAPI = APIURL + "hr/new";
+export const IOMHRGetAPI = APIURL + "hr/show";
+export const IOMHRDeleteAPI = APIURL + "hr/delete";
+export const IOMHREditAPI = APIURL + "hr/update";
+export const IOMHRAccountAPI = APIURL + "hr/loginifo";

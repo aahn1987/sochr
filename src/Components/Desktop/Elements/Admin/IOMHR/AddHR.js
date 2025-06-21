@@ -1,8 +1,6 @@
 import {
   Box,
   Button,
-  FormControlLabel,
-  Switch,
   TextField,
   Typography,
   colors,
@@ -12,19 +10,20 @@ import {
 } from "@mui/material";
 import { BreadCrumber } from "../../../../Common/Bars/Desktop";
 import { useEffect, useState } from "react";
-import AddModeratorTwoToneIcon from "@mui/icons-material/AddModeratorTwoTone";
+import GroupAddTwoToneIcon from "@mui/icons-material/GroupAddTwoTone";
 import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
 import axios from "axios";
 import { PageLoader } from "../../Common";
 import { SetTitle } from "../../../../../Context/SysFuncs";
-import { AdminAddAPI, AdminListerApi } from "../../../../../Context/ApiLinks";
+import { IOMHRAddAPI, IOMHRListerAPI } from "../../../../../Context/ApiLinks";
 import {
-  AdminInfoStore,
+  IOMHRStore,
   UserLoginStore,
   ActionMessageStore,
 } from "../../../../../Store";
-export default function NewStaff() {
-  const setAdminList = AdminInfoStore((state) => state.setAdminList);
+
+export default function AddHR() {
+  const setHRList = IOMHRStore((state) => state.setHRList);
   const userRef = UserLoginStore((state) => state.userRef);
   const setsanckShow = ActionMessageStore((state) => state.setsanckShow);
   const setsnackMessage = ActionMessageStore((state) => state.setsnackMessage);
@@ -36,21 +35,11 @@ export default function NewStaff() {
   useEffect(() => {
     SetTitle("Add SOC Staff");
     setGeneralInfo({
+      fullname: "",
+      emailaddress: "",
+      phonenumber: "",
       username: "",
       userpass: "",
-      refrence: "",
-      fullname: "",
-      jobpostition: "",
-      emailaddress: "",
-      fullname: "",
-      phonenumber: "",
-      managestaff: 0,
-      manageiom: 0,
-      manageemployees: 0,
-      managepayroll: 0,
-      manageleaves: 0,
-      manageevalutions: 0,
-      managesysconfig: 0,
       adminref: userRef,
     });
     setTimeout(() => {
@@ -65,28 +54,18 @@ export default function NewStaff() {
     });
   };
   const handleUpdate = async () => {
-    const response = await axios.post(AdminAddAPI, GeneralInfo);
+    const response = await axios.post(IOMHRAddAPI, GeneralInfo);
     const data = response.data;
     setsnackMessage(data.message);
     if (data.success) {
       setsnackSeverity("success");
       GrabData();
       setGeneralInfo({
+        fullname: "",
+        emailaddress: "",
+        phonenumber: "",
         username: "",
         userpass: "",
-        refrence: "",
-        fullname: "",
-        jobpostition: "",
-        emailaddress: "",
-        fullname: "",
-        phonenumber: "",
-        managestaff: 0,
-        manageiom: 0,
-        manageemployees: 0,
-        managepayroll: 0,
-        manageleaves: 0,
-        manageevalutions: 0,
-        managesysconfig: 0,
         adminref: userRef,
       });
     } else {
@@ -96,10 +75,10 @@ export default function NewStaff() {
   };
   const GrabData = () => {
     axios
-      .get(AdminListerApi)
+      .get(IOMHRListerAPI)
       .then((response) => {
         if (response.status === 200 && Array.isArray(response.data)) {
-          setAdminList(response.data);
+          setHRList(response.data);
         } else {
           console.warn("Unexpected response format", response);
         }
@@ -114,9 +93,9 @@ export default function NewStaff() {
         mainlink="/admin"
         mainname="Admin Panel"
         hassub={true}
-        subname="SOC Staff"
-        sublink="/admin/socstaff"
-        finalname="New Staff"
+        subname="IOM HR"
+        sublink="/admin/iomhr"
+        finalname="New IOM HR"
       />
       {isLoading ? (
         <PageLoader />
@@ -129,17 +108,17 @@ export default function NewStaff() {
               display={"flex"}
               alignItems={"center"}
             >
-              <AddModeratorTwoToneIcon sx={{ mr: 2 }} />
-              Add SOC Staff
+              <GroupAddTwoToneIcon fontSize="small" sx={{ mr: 2 }} /> Add New
+              IOM HR
             </Typography>
           </Box>
           <Paper elevation={3} sx={{ py: 2, px: 1 }}>
             <Typography variant="h6" color={colors.blueGrey[500]} flexGrow={1}>
-              Admin info
+              Personal info
             </Typography>
             <Divider sx={{ mb: 3 }} />
             <Grid container spacing={2}>
-              <Grid size={3}>
+              <Grid size={4}>
                 <TextField
                   label="Fullname"
                   name="fullname"
@@ -158,26 +137,7 @@ export default function NewStaff() {
                   onChange={handleGeneralInfoChange}
                 />
               </Grid>
-              <Grid size={3}>
-                <TextField
-                  label="Job Position"
-                  name="jobpostition"
-                  size="small"
-                  sx={{
-                    fontSize: "14px",
-                    "& .MuiInputBase-input": {
-                      fontSize: "14px",
-                    },
-                    "& .MuiInputLabel-root": {
-                      fontSize: "14px",
-                    },
-                  }}
-                  fullWidth
-                  value={GeneralInfo.jobpostition || ""}
-                  onChange={handleGeneralInfoChange}
-                />
-              </Grid>
-              <Grid size={3}>
+              <Grid size={4}>
                 <TextField
                   label="E-mail Address"
                   name="emailaddress"
@@ -197,7 +157,7 @@ export default function NewStaff() {
                   onChange={handleGeneralInfoChange}
                 />
               </Grid>
-              <Grid size={3}>
+              <Grid size={4}>
                 <TextField
                   label="Phone Number"
                   name="phonenumber"
@@ -217,68 +177,6 @@ export default function NewStaff() {
                   onChange={handleGeneralInfoChange}
                 />
               </Grid>
-              <Grid size={12}>
-                <Typography variant="h6" color={colors.blueGrey[500]}>
-                  Privileges
-                </Typography>
-              </Grid>
-              {[
-                {
-                  label: "SOC Staff",
-                  name: "managestaff",
-                  val: GeneralInfo.managestaff,
-                },
-                {
-                  label: "IOM HR",
-                  name: "manageiom",
-                  val: GeneralInfo.manageiom,
-                },
-                {
-                  label: "Employees",
-                  name: "manageemployees",
-                  val: GeneralInfo.manageemployees,
-                },
-                {
-                  label: "Payroll",
-                  name: "managepayroll",
-                  val: GeneralInfo.managepayroll,
-                },
-                {
-                  label: "Leaves",
-                  name: "manageleaves",
-                  val: GeneralInfo.manageleaves,
-                },
-                {
-                  label: "Evalutions",
-                  name: "manageevalutions",
-                  val: GeneralInfo.manageevalutions,
-                },
-                {
-                  label: "System Configs & Logs",
-                  name: "managesysconfig",
-                  val: GeneralInfo.managesysconfig,
-                },
-              ].map((privilege) => (
-                <Grid key={privilege.name} size={3}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        size="small"
-                        checked={privilege.val}
-                        onChange={handleGeneralInfoChange}
-                        name={privilege.name}
-                      />
-                    }
-                    sx={{
-                      "& .MuiFormControlLabel-label": {
-                        fontSize: "14px",
-                      },
-                      px: 2,
-                    }}
-                    label={privilege.label}
-                  />
-                </Grid>
-              ))}
               <Grid size={12}>
                 <Typography variant="h6" color={colors.blueGrey[500]}>
                   Account Information
@@ -328,8 +226,8 @@ export default function NewStaff() {
             <Grid container spacing={2} sx={{ mt: 2 }}>
               <Grid size={12} sx={{ textAlign: "end" }}>
                 <Button variant="contained" onClick={handleUpdate} size="small">
-                  <SaveTwoToneIcon fontSize="small" sx={{ mr: 2 }} /> Save SOC
-                  Staff
+                  <SaveTwoToneIcon fontSize="small" sx={{ mr: 2 }} /> Save IOM
+                  HR
                 </Button>
               </Grid>
             </Grid>

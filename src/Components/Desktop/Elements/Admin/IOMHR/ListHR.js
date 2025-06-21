@@ -16,13 +16,13 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { BreadCrumber } from "../../../../Common/Bars/Desktop";
-import { AdminInfoStore } from "../../../../../Store";
+import { IOMHRStore } from "../../../../../Store";
 import { SetTitle } from "../../../../../Context/SysFuncs";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
-import AddModeratorTwoToneIcon from "@mui/icons-material/AddModeratorTwoTone";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import GroupAddTwoToneIcon from "@mui/icons-material/GroupAddTwoTone";
+import PeopleAltTwoToneIcon from "@mui/icons-material/PeopleAltTwoTone";
 import { PageLoader } from "../../Common";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,11 +43,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-export default function ListStaff() {
-  const adminList = AdminInfoStore((state) => state.adminList);
+
+export default function ListHR() {
+  const HRList = IOMHRStore((state) => state.HRList);
   const [isLoading, setisLoading] = useState(true);
   useEffect(() => {
-    SetTitle("List SOC Staff");
+    SetTitle("List IOM HR");
     setTimeout(() => {
       setisLoading(false);
     }, 3000);
@@ -58,7 +59,7 @@ export default function ListStaff() {
         mainlink="/admin"
         mainname="Admin Panel"
         hassub={false}
-        finalname="SOC Staff"
+        finalname="IOM HR"
       />
       {isLoading ? (
         <PageLoader />
@@ -71,11 +72,11 @@ export default function ListStaff() {
               display={"flex"}
               alignItems={"center"}
             >
-              <AdminPanelSettingsOutlinedIcon sx={{ mr: 2 }} />
-              SOC Staff
+              <PeopleAltTwoToneIcon sx={{ mr: 2 }} />
+              IOM HR
             </Typography>
             <Box flexGrow={1}></Box>
-            <Tooltip title="Add New SOC Staff">
+            <Tooltip title="Add New IOM HR">
               <Button
                 component={NavLink}
                 to="add"
@@ -83,8 +84,8 @@ export default function ListStaff() {
                 color="primary"
                 size="small"
               >
-                <AddModeratorTwoToneIcon fontSize="small" sx={{ mr: 2 }} /> Add
-                New SOC Staff
+                <GroupAddTwoToneIcon fontSize="small" sx={{ mr: 2 }} /> Add New
+                IOM HR
               </Button>
             </Tooltip>
           </Box>
@@ -94,34 +95,40 @@ export default function ListStaff() {
                 <TableRow>
                   <StyledTableCell>Image</StyledTableCell>
                   <StyledTableCell>Fullname</StyledTableCell>
-                  <StyledTableCell>Position</StyledTableCell>
                   <StyledTableCell>Email</StyledTableCell>
                   <StyledTableCell>Phone Number</StyledTableCell>
                   <StyledTableCell align="right">Actions</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {adminList.map((row) => (
-                  <StyledTableRow key={row.id} sx={{ fontSize: "8px" }}>
-                    <StyledTableCell component="th" scope="row">
-                      <Avatar alt={row.fullname} src={row.profileimage} />
-                    </StyledTableCell>
-                    <StyledTableCell>{row.fullname}</StyledTableCell>
-                    <StyledTableCell>{row.jobpostition}</StyledTableCell>
-                    <StyledTableCell>{row.emailaddress}</StyledTableCell>
-                    <StyledTableCell>{row.phonenumber}</StyledTableCell>
-                    <StyledTableCell align="right">
-                      <Tooltip title={"Edit " + row.fullname}>
-                        <NavLink
-                          className="alllink tableLink"
-                          to={"edit/" + row.refrence}
-                        >
-                          <EditTwoToneIcon fontSize="small" />
-                        </NavLink>
-                      </Tooltip>
+                {HRList.length === 0 ? (
+                  <StyledTableRow>
+                    <StyledTableCell colSpan={5} align="center">
+                      No record found
                     </StyledTableCell>
                   </StyledTableRow>
-                ))}
+                ) : (
+                  HRList.map((row) => (
+                    <StyledTableRow key={row.id} sx={{ fontSize: "8px" }}>
+                      <StyledTableCell component="th" scope="row">
+                        <Avatar alt={row.fullname} src={row.profileimage} />
+                      </StyledTableCell>
+                      <StyledTableCell>{row.fullname}</StyledTableCell>
+                      <StyledTableCell>{row.emailaddress}</StyledTableCell>
+                      <StyledTableCell>{row.phonenumber}</StyledTableCell>
+                      <StyledTableCell align="right">
+                        <Tooltip title={"Edit " + row.fullname}>
+                          <NavLink
+                            className="alllink tableLink"
+                            to={"edit/" + row.refrence}
+                          >
+                            <EditTwoToneIcon fontSize="small" />
+                          </NavLink>
+                        </Tooltip>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </TableContainer>
