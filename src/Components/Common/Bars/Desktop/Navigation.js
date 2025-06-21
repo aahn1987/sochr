@@ -30,9 +30,8 @@ export default function Navigation() {
   return (
     <Box
       sx={{
-        position: "fixed",
-        top: 10,
-        left: 10,
+        marginTop: "10px",
+        marginLeft: "10px",
         height: "calc(100% - 20px)",
         width: drawerWidth,
         borderRadius: 3,

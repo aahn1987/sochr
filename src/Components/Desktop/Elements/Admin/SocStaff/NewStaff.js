@@ -1,7 +1,8 @@
 import {
   Box,
   Button,
-  MenuItem,
+  FormControlLabel,
+  Switch,
   TextField,
   Typography,
   colors,
@@ -58,10 +59,10 @@ export default function NewStaff() {
     }, 3000);
   }, [setisLoading]);
   const handleGeneralInfoChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setGeneralInfo({
       ...GeneralInfo,
-      [name]: value,
+      [name]: type === "checkbox" ? (checked ? 1 : 0) : value,
     });
   };
   const handleUpdate = async () => {
@@ -218,8 +219,73 @@ export default function NewStaff() {
                   onChange={handleGeneralInfoChange}
                 />
               </Grid>
-            </Grid>
-            <Grid container spacing={2} sx={{ mt: 2 }}>
+              <Grid size={12}>
+                <Typography variant="h6" color={colors.blueGrey[500]}>
+                  Privileges
+                </Typography>
+              </Grid>
+              {[
+                {
+                  label: "SOC Staff",
+                  name: "managestaff",
+                  val: GeneralInfo.managestaff,
+                },
+                {
+                  label: "IOM HR",
+                  name: "manageiom",
+                  val: GeneralInfo.manageiom,
+                },
+                {
+                  label: "Employees",
+                  name: "manageemployees",
+                  val: GeneralInfo.manageemployees,
+                },
+                {
+                  label: "Payroll",
+                  name: "managepayroll",
+                  val: GeneralInfo.managepayroll,
+                },
+                {
+                  label: "Leaves",
+                  name: "manageleaves",
+                  val: GeneralInfo.manageleaves,
+                },
+                {
+                  label: "Evalutions",
+                  name: "manageevalutions",
+                  val: GeneralInfo.manageevalutions,
+                },
+                {
+                  label: "System Configs & Logs",
+                  name: "managesysconfig",
+                  val: GeneralInfo.managesysconfig,
+                },
+              ].map((privilege) => (
+                <Grid key={privilege.name} size={3}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        size="small"
+                        checked={privilege.val}
+                        onChange={handleGeneralInfoChange}
+                        name={privilege.name}
+                      />
+                    }
+                    sx={{
+                      "& .MuiFormControlLabel-label": {
+                        fontSize: "14px",
+                      },
+                      px: 2,
+                    }}
+                    label={privilege.label}
+                  />
+                </Grid>
+              ))}
+              <Grid size={12}>
+                <Typography variant="h6" color={colors.blueGrey[500]}>
+                  Account Information
+                </Typography>
+              </Grid>
               <Grid size={6}>
                 <TextField
                   label="Uername"
@@ -259,70 +325,6 @@ export default function NewStaff() {
                   onChange={handleGeneralInfoChange}
                 />
               </Grid>
-            </Grid>
-            <Grid container spacing={3} sx={{ mt: 2 }}>
-              {[
-                {
-                  label: "SOC Staff",
-                  name: "managestaff",
-                  val: GeneralInfo.managestaff,
-                },
-                {
-                  label: "IOM HR",
-                  name: "manageiom",
-                  val: GeneralInfo.manageiom,
-                },
-                {
-                  label: "Employees",
-                  name: "manageemployees",
-                  val: GeneralInfo.manageemployees,
-                },
-                {
-                  label: "Payroll",
-                  name: "managepayroll",
-                  val: GeneralInfo.managepayroll,
-                },
-                {
-                  label: "Leaves",
-                  name: "manageleaves",
-                  val: GeneralInfo.manageleaves,
-                },
-                {
-                  label: "Evalutions",
-                  name: "manageevalutions",
-                  val: GeneralInfo.manageevalutions,
-                },
-                {
-                  label: "System Configs & Logs",
-                  name: "managesysconfig",
-                  val: GeneralInfo.managesysconfig,
-                },
-              ].map((privilege) => (
-                <Grid key={privilege.name} size={3}>
-                  <TextField
-                    label={privilege.label}
-                    name={privilege.name}
-                    size="small"
-                    select
-                    sx={{
-                      fontSize: "14px",
-                      "& .MuiInputBase-input": {
-                        fontSize: "14px",
-                      },
-                      "& .MuiInputLabel-root": {
-                        fontSize: "14px",
-                      },
-                    }}
-                    fullWidth
-                    onChange={handleGeneralInfoChange}
-                    value={privilege.val}
-                  >
-                    <MenuItem value={1}>Yes</MenuItem>
-                    <MenuItem value={0}>No</MenuItem>
-                  </TextField>
-                </Grid>
-              ))}
-              <Grid size={3}></Grid>
             </Grid>
             <Divider sx={{ mt: 2 }} />
             <Grid container spacing={2} sx={{ mt: 2 }}>

@@ -1,7 +1,8 @@
 import {
   Box,
   Button,
-  MenuItem,
+  FormControlLabel,
+  Switch,
   TextField,
   Typography,
   Dialog,
@@ -91,13 +92,12 @@ export default function EditStaff() {
       });
   }, [eid, setAdminInfo]);
   const handleGeneralInfoChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setGeneralInfo({
       ...GeneralInfo,
-      [name]: value,
+      [name]: type === "checkbox" ? (checked ? 1 : 0) : value,
     });
   };
-
   const handleAccountInfoChange = (e) => {
     const { name, value } = e.target;
     setAccountInfo({ ...AccountInfo, [name]: value });
@@ -114,7 +114,6 @@ export default function EditStaff() {
     }
     setsanckShow(true);
   };
-
   const handleUpdateUser = async () => {
     const response = await axios.post(AdminAccountAPI, AccountInfo);
     const data = response.data;
@@ -284,8 +283,11 @@ export default function EditStaff() {
                     onChange={handleGeneralInfoChange}
                   />
                 </Grid>
-              </Grid>
-              <Grid container spacing={3} sx={{ mt: 2 }}>
+                <Grid size={12}>
+                  <Typography variant="h6" color={colors.blueGrey[500]}>
+                    Privileges
+                  </Typography>
+                </Grid>
                 {[
                   {
                     label: "SOC Staff",
@@ -324,30 +326,25 @@ export default function EditStaff() {
                   },
                 ].map((privilege) => (
                   <Grid key={privilege.name} size={3}>
-                    <TextField
-                      label={privilege.label}
-                      name={privilege.name}
-                      size="small"
-                      select
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          size="small"
+                          checked={privilege.val}
+                          onChange={handleGeneralInfoChange}
+                          name={privilege.name}
+                        />
+                      }
                       sx={{
-                        fontSize: "14px",
-                        "& .MuiInputBase-input": {
+                        "& .MuiFormControlLabel-label": {
                           fontSize: "14px",
                         },
-                        "& .MuiInputLabel-root": {
-                          fontSize: "14px",
-                        },
+                        px: 2,
                       }}
-                      fullWidth
-                      onChange={handleGeneralInfoChange}
-                      value={privilege.val}
-                    >
-                      <MenuItem value={1}>Yes</MenuItem>
-                      <MenuItem value={0}>No</MenuItem>
-                    </TextField>
+                      label={privilege.label}
+                    />
                   </Grid>
                 ))}
-                <Grid size={3}></Grid>
               </Grid>
               <Divider sx={{ mt: 2 }} />
               <Grid container spacing={2} sx={{ mt: 2 }}>
@@ -363,7 +360,7 @@ export default function EditStaff() {
                 </Grid>
               </Grid>
             </Paper>
-            <Box sx={{ my: 1 }}></Box>
+            <Box sx={{ mt: 1 }}></Box>
             <Paper elevation={3} sx={{ py: 2, px: 1 }}>
               <Typography
                 variant="h6"

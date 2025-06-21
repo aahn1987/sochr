@@ -126,7 +126,6 @@ export default function ListStaff() {
                         <NavLink
                           className="alllink tableLink"
                           to={"edit/" + row.refrence}
-                          title={"Edit " + row.fullname}
                         >
                           <EditTwoToneIcon fontSize="small" />
                         </NavLink>
