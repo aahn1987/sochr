@@ -1,0 +1,113 @@
+import {
+  Box,
+  Button,
+  Switch,
+  TextField,
+  Typography,
+  FormControlLabel,
+  Divider,
+  Stack,
+} from "@mui/material";
+import { BreadCrumber } from "../../../../Common/Bars/Desktop";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { AdminInfoStore } from "../../../../../Store";
+import { AdminGetAPI, AdminEditAPI, AdminDeleteAPI } from "../../../../../Context/ApiLinks";
+import { useEffect, useState } from "react";
+
+export default function EditStaff() {
+  const setAdminInfo = AdminInfoStore((state) => state.setAdminInfo);
+  const adminInfo = AdminInfoStore((state) => state.adminInfo);
+  const userRef = AdminInfoStore((state) => state.userRef);
+  const { eid } = useParams();
+  const [form1, setForm1] = useState({});
+  const [form2, setForm2] = useState({ userpass: "" });
+
+  useEffect(() => {
+    axios
+      .post(AdminGetAPI, { refrence: eid })
+      .then((res) => {
+        setAdminInfo(res.data);
+        setForm1(res.data);
+        setForm2({
+          username: res.data.username,
+          fullname: res.data.fullname,
+          refrence: res.data.refrence,
+          userpass: "",
+        });
+      })
+      .catch((err) => console.error("Error fetching admin info:", err));
+  }, [eid, setAdminInfo]);
+
+  const handleForm1Change = (e) => {
+    const { name, value, type, checked } = e.target;
+    setForm1({ ...form1, [name]: type === "checkbox" ? (checked ? 1 : 0) : value });
+  };
+
+  const handleForm2Change = (e) => {
+    const { name, value } = e.target;
+    setForm2({ ...form2, [name]: value });
+  };
+
+  const handleUpdate = () => {
+    axios.post(AdminEditAPI, form1).then(() => alert("تم تحديث البيانات بنجاح"));
+  };
+
+  const handleUpdateUser = () => {
+    axios.post(AdminEditAPI, { ...form2, updated_by: userRef }).then(() => alert("تم تحديث معلومات الحساب بنجاح"));
+  };
+
+  const handleDelete = () => {
+    axios.post(AdminDeleteAPI, { refrence: eid }).then(() => alert("تم حذف المدير بنجاح"));
+  };
+
+  return (
+    <Box display={"flex"} flexDirection={"column"} gap={2}>
+      <BreadCrumber
+        mainlink="/admin"
+        mainname="Admin Panel"
+        hassub={true}
+        subname="SOC Staff"
+        sublink="/admin/socstaff"
+        finalname={"Edit: " + eid}
+      />
+
+      <Typography variant="h6">تحديث معلومات المدير</Typography>
+      <Stack spacing={2} component="form">
+        <TextField label="الاسم الكامل" name="fullname" value={form1.fullname || ""} onChange={handleForm1Change} />
+        <TextField label="الوظيفة" name="jobpostition" value={form1.jobpostition || ""} onChange={handleForm1Change} />
+        <TextField label="البريد الإلكتروني" name="emailaddress" value={form1.emailaddress || ""} onChange={handleForm1Change} />
+        <TextField label="رقم الهاتف" name="phonenumber" value={form1.phonenumber || ""} onChange={handleForm1Change} />
+
+        <Divider />
+
+        <FormControlLabel
+          control={<Switch checked={form1.servicestatus === 1} onChange={handleForm1Change} name="servicestatus" />}
+          label="الحالة الوظيفية"
+        />
+        <FormControlLabel control={<Switch checked={form1.manage_staff === 1} onChange={handleForm1Change} name="manage_staff" />} label="إدارة الموظفين" />
+        <FormControlLabel control={<Switch checked={form1.manage_iom === 1} onChange={handleForm1Change} name="manage_iom" />} label="إدارة IOM" />
+        <FormControlLabel control={<Switch checked={form1.manage_employees === 1} onChange={handleForm1Change} name="manage_employees" />} label="إدارة العاملين" />
+        <FormControlLabel control={<Switch checked={form1.manage_payroll === 1} onChange={handleForm1Change} name="manage_payroll" />} label="إدارة الرواتب" />
+        <FormControlLabel control={<Switch checked={form1.manage_leaves === 1} onChange={handleForm1Change} name="manage_leaves" />} label="إدارة الإجازات" />
+        <FormControlLabel control={<Switch checked={form1.manage_evalutions === 1} onChange={handleForm1Change} name="manage_evalutions" />} label="إدارة التقييمات" />
+        <FormControlLabel control={<Switch checked={form1.manage_sysconfig === 1} onChange={handleForm1Change} name="manage_sysconfig" />} label="إعدادات النظام" />
+
+        <Button variant="contained" onClick={handleUpdate}>تحديث البيانات</Button>
+        <Button variant="outlined" color="error" onClick={handleDelete}>حذف المدير</Button>
+      </Stack>
+
+      <Divider sx={{ my: 2 }} />
+
+      <Typography variant="h6">تحديث معلومات الدخول</Typography>
+      <Stack spacing={2} component="form">
+        <TextField label="اسم المستخدم" name="username" value={form2.username || ""} onChange={handleForm2Change} />
+        <TextField label="الاسم الكامل" name="fullname" value={form2.fullname || ""} onChange={handleForm2Change} />
+        <TextField label="الرمز المرجعي" name="refrence" value={form2.refrence || ""} disabled />
+        <TextField label="كلمة المرور الجديدة" name="userpass" value={form2.userpass || ""} onChange={handleForm2Change} />
+        <Button variant="contained" onClick={handleUpdateUser}>تحديث الحساب</Button>
+      </Stack>
+    </Box>
+  );
+}
+

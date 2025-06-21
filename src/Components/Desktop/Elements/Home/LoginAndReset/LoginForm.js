@@ -58,7 +58,7 @@ export default function LoginForm() {
 
       setsnackMessage(data.message);
 
-      if (data.success || data.LOGGED === 1) {
+      if (data.success) {
         // Save cookies
         Cookies.set("loggedIn", true, { expires: 30, path: "/" });
         Cookies.set("userRole", data.userrole, { expires: 30, path: "/" });

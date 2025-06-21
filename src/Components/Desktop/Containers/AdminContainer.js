@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { BASEURI } from "../../../Context/SysConfs";
 import {
   AdminInfoStore,
@@ -10,13 +10,11 @@ import {
   TopBar,
   PageLoader,
   Navigation,
-  BreadCrumber,
   NotFound,
 } from "../../Common/Bars/Desktop/";
 import { AdminInfoApi } from "../../../Context/ApiLinks";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
-
 import {
   Account,
   ChangeLogs,
@@ -85,7 +83,7 @@ export default function AdminContainer() {
       )}
     </>
     */
-    <Box component="main" display={"flex"}>
+    <Box component="main" display={"flex"} width={"100vw"}>
       <Box sx={{ width: "240px" }}>
         <Navigation />
       </Box>

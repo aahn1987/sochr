@@ -17,7 +17,7 @@ import { UserLoginStore } from "./Store";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#9e9e9e",
+      main: "#212121",
     },
     secondary: {
       main: "#2e3192",

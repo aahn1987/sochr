@@ -17,7 +17,7 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #32337b;
+    background: #424242;
     margin: -4px 0 0 -4px;
 }
 
@@ -115,7 +115,7 @@
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: #32337b;
+    background: #424242;
     animation: lds-grid 1.2s linear infinite;
 }
 
@@ -198,7 +198,7 @@
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: #32337b;
+    background: #424242;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 
@@ -263,7 +263,7 @@
     height: 64px;
     margin: 8px;
     border-radius: 50%;
-    background: #32337b;
+    background: #424242;
     animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 
@@ -301,8 +301,8 @@
     height: 64px;
     margin: 8px;
     border-radius: 50%;
-    border: 6px solid #32337b;
-    border-color: #32337b transparent #32337b transparent;
+    border: 6px solid #424242;
+    border-color: #424242 transparent #424242 transparent;
     animation: lds-dual-ring 1.2s linear infinite;
 }
 
@@ -328,7 +328,7 @@
     position: absolute;
     left: 8px;
     width: 16px;
-    background: #32337b;
+    background: #424242;
     animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
 
@@ -374,10 +374,10 @@
     width: 64px;
     height: 64px;
     margin: 8px;
-    border: 8px solid #32337b;
+    border: 8px solid #424242;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #32337b transparent transparent transparent;
+    border-color: #424242 transparent transparent transparent;
 }
 
 .lds-ring div:nth-child(1) {
@@ -413,7 +413,7 @@
     position: absolute;
     width: 6px;
     height: 6px;
-    background: #32337b;
+    background: #424242;
     border-radius: 50%;
     animation: lds-default 1.2s linear infinite;
 }

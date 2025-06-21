@@ -11,12 +11,25 @@ export default function ActionMessage() {
       autoHideDuration={3000}
       onClose={setsanckShow}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      sx={{ top: "10px !important", right: "60px !important" }}
     >
       <Alert
         onClose={setsanckShow}
         severity={snackSeverity}
+        variant="outlined"
         sx={{
-          "& .MuiAlert-message": { textAlign: "center", width: "inherit" },
+          "& .MuiAlert-message": {
+            textAlign: "center",
+            width: "inherit",
+            fontSize: "12px",
+          },
+          "& .MuiAlert-icon": {
+            fontSize: "16px",
+          },
+          "& .MuiAlert-action": {
+            display: "none",
+          },
+          bgcolor: "background.paper",
         }}
       >
         {snackMessage}

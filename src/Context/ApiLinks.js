@@ -8,3 +8,9 @@ export const FCMAPID = APIURL + "employee/token/remove";
 
 // Admin
 export const AdminInfoApi = APIURL + "admin/show";
+export const AdminListerApi = APIURL + "admin/list";
+export const AdminGetAPI = APIURL + "admin/show";
+export const AdminEditAPI = APIURL + "admin/update";
+export const AdminDeleteAPI = APIURL + "admin/delete";
+export const AdminAccountAPI = APIURL + "admin/logininfo";
+export const AdminAddAPI = APIURL + "admin/new";

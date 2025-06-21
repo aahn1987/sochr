@@ -10,9 +10,6 @@ import {
   Box,
   Divider,
 } from "@mui/material";
-import { Img } from "react-image";
-import { CircleLoader } from "../../Loaders/";
-import LOGO from "../../../../Assets/IMG/logo.png";
 import { useState } from "react";
 import { AdminInfoStore, UserLoginStore } from "../../../../Store";
 import { NavLink } from "react-router-dom";
@@ -45,7 +42,7 @@ export default function TopBar() {
     <Box display={"flex"} sx={{ my: 1 }} alignItems={"center"}>
       <Box flexGrow={1} paddingLeft={2}>
         <Typography variant="h6" color="initial">
-          Welcome, {adminData.fullname} !!
+          Welcome, {adminData.fullname}
         </Typography>
       </Box>
       <Tooltip title="Profile Menu">
